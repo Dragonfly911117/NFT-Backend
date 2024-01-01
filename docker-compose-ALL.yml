@@ -4,6 +4,7 @@ services:
   mysql:
     image: mysql:latest
     environment:
+      TZ: "Asia/Taipei"
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: NFT
       MYSQL_USER: backend
@@ -25,6 +26,8 @@ services:
       - mysql
     networks:
       - NFT_network
+    environment:
+      TZ: "Asia/Taipei"
 networks:
   NFT_network:
     driver: bridge

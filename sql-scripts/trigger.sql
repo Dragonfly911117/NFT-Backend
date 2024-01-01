@@ -9,7 +9,7 @@ BEGIN
         IF EXISTS (SELECT 1
                    FROM Coupon
                    WHERE coupon_code = NEW.coupon_code
-                     and expire_time >= convert_tz(now(), 'UTC', 'Asia/Taipei')) THEN
+                     and expire_time >= now()) THEN
             SIGNAL SQLSTATE '45000'
                 SET MESSAGE_TEXT = 'There is a same coupon code that is not expired yet.';
         END IF;
@@ -25,7 +25,7 @@ CREATE TRIGGER check_coupon_expire_time
     FOR EACH ROW
 BEGIN
     IF NEW.coupon_code IS NOT NULL THEN
-        IF New.expire_time < convert_tz(now(), 'UTC', 'Asia/Taipei') THEN
+        IF New.expire_time < now() THEN
             SIGNAL SQLSTATE '45000'
                 SET MESSAGE_TEXT = 'The coupon has already expired.';
         END IF;
