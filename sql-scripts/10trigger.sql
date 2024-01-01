@@ -58,3 +58,19 @@ BEGIN
     END IF;
 END;
 //
+DELIMITER ;
+
+DELIMITER
+//
+
+CREATE TRIGGER update_receive_time
+    BEFORE UPDATE
+    ON Transaction
+    FOR EACH ROW
+BEGIN
+    IF NEW.status = 'Arrived' THEN
+        SET NEW.receive_time = NOW();
+    END IF;
+END;
+//
+DELIMITER ;
